@@ -1,0 +1,7 @@
+# Nom du site : doit correspondre à la ligne ajoutée dans le fichier hosts
+vault.lan {
+    # Certificat signé par l'autorité interne de Caddy
+    tls internal
+    # Transmet les requêtes à Vaultwarden, port 80 interne, jamais publié
+    reverse_proxy vaultwarden:80
+}

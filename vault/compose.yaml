@@ -1,0 +1,23 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://vault.lan"
+      SIGNUPS_ALLOWED: "false"
+      ADMIN_TOKEN: '$$argon2id$$v=19$$m=65540,t=3,p=4$$t+OOE7WzWX3YuNTQ9/WKeLGC2mjnt1RRbezz/NiITc0$$1eWpoOlVb7i1ce+wQMpEn5vhmC5u+IV8GMId/R2nXcg'
+    volumes:
+      - vw-data:/data
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    depends_on:
+      - vaultwarden
+volumes:
+  vw-data:
+  caddy-data:
